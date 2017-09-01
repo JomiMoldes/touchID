@@ -26,6 +26,7 @@
 		4885C3591F58337D00E622E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4885C3581F58337D00E622E2 /* Assets.xcassets */; };
 		4885C35C1F58337D00E622E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4885C35A1F58337D00E622E2 /* LaunchScreen.storyboard */; };
 		4885C3671F58337D00E622E2 /* TouchIDCredentialsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4885C3661F58337D00E622E2 /* TouchIDCredentialsTests.swift */; };
+		658B824BE599581B847C076C /* Pods_TouchIDCredentials.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 003AB2FB1C81C94578A8A1C5 /* Pods_TouchIDCredentials.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		003AB2FB1C81C94578A8A1C5 /* Pods_TouchIDCredentials.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TouchIDCredentials.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		036951A33E46D53AEFE15315 /* Pods-TouchIDCredentials.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TouchIDCredentials.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TouchIDCredentials/Pods-TouchIDCredentials.debug.xcconfig"; sourceTree = "<group>"; };
 		45BAF0B3E4CEEB77566D39C3 /* TouchIDProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDProtocol.swift; sourceTree = "<group>"; };
 		45BAF1023934EA3C77BB3573 /* KeychainAccessManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainAccessManager.swift; sourceTree = "<group>"; };
 		45BAF1A4C2D33C4B3360A2B6 /* SecItemWrapperFake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecItemWrapperFake.swift; sourceTree = "<group>"; };
@@ -62,6 +65,7 @@
 		4885C3621F58337D00E622E2 /* TouchIDCredentialsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TouchIDCredentialsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4885C3661F58337D00E622E2 /* TouchIDCredentialsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchIDCredentialsTests.swift; sourceTree = "<group>"; };
 		4885C3681F58337D00E622E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF3805AB666DF9003562B49D /* Pods-TouchIDCredentials.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TouchIDCredentials.release.xcconfig"; path = "Pods/Target Support Files/Pods-TouchIDCredentials/Pods-TouchIDCredentials.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				658B824BE599581B847C076C /* Pods_TouchIDCredentials.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +87,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2FEB2A4C4B0FDD3F8E58F7E9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				036951A33E46D53AEFE15315 /* Pods-TouchIDCredentials.debug.xcconfig */,
+				BF3805AB666DF9003562B49D /* Pods-TouchIDCredentials.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		45BAF0651D897FBBF21841F2 /* keychain */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,6 +161,8 @@
 				4885C3501F58337D00E622E2 /* TouchIDCredentials */,
 				4885C3651F58337D00E622E2 /* TouchIDCredentialsTests */,
 				4885C34F1F58337D00E622E2 /* Products */,
+				2FEB2A4C4B0FDD3F8E58F7E9 /* Pods */,
+				710F6FBB2C1C7A8B85C6892D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -183,6 +199,14 @@
 			path = TouchIDCredentialsTests;
 			sourceTree = "<group>";
 		};
+		710F6FBB2C1C7A8B85C6892D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				003AB2FB1C81C94578A8A1C5 /* Pods_TouchIDCredentials.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -190,9 +214,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4885C36B1F58337D00E622E2 /* Build configuration list for PBXNativeTarget "TouchIDCredentials" */;
 			buildPhases = (
+				F0366182026A08D9F91A5398 /* [CP] Check Pods Manifest.lock */,
 				4885C34A1F58337D00E622E2 /* Sources */,
 				4885C34B1F58337D00E622E2 /* Frameworks */,
 				4885C34C1F58337D00E622E2 /* Resources */,
+				B0D6FF9F3A809DD86A85F615 /* [CP] Embed Pods Frameworks */,
+				989A1EF7074EC14F71633117 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -281,6 +308,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		989A1EF7074EC14F71633117 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TouchIDCredentials/Pods-TouchIDCredentials-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B0D6FF9F3A809DD86A85F615 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TouchIDCredentials/Pods-TouchIDCredentials-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F0366182026A08D9F91A5398 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4885C34A1F58337D00E622E2 /* Sources */ = {
@@ -440,6 +515,7 @@
 		};
 		4885C36C1F58337D00E622E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 036951A33E46D53AEFE15315 /* Pods-TouchIDCredentials.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = PS7VX6L58X;
@@ -457,6 +533,7 @@
 		};
 		4885C36D1F58337D00E622E2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF3805AB666DF9003562B49D /* Pods-TouchIDCredentials.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";

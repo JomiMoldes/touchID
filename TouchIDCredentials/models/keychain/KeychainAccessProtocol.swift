@@ -4,14 +4,15 @@
 //
 
 import Foundation
+import PromiseKit
 
 protocol KeychainAccessProtocol {
 
-    func storeCredentials(userName:String, password:String)
+    func storeCredentials(userName:String, password:String) -> OSStatus
 
-    func checkCredentials(userName:String)
+    func checkCredentials(userName:String) -> Promise<OSStatus>
 
-    func updateCredentials(userName:String, password:String)
+    func updateCredentials(userName:String, password:String)// -> Promise<OSStatus>
 
     func deleteCredentials(userName:String)
 

@@ -9,8 +9,9 @@ import Foundation
 
 class SecItemWrapperFake : SecItemWrapper {
 
+    var status : OSStatus!
+    
     override func addItem(_ attributes: CFDictionary, _ result: UnsafeMutablePointer<CFTypeRef?>?) -> OSStatus {
-        let status = OSStatus(0)
         return status
     }
 }

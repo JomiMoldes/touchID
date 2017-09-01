@@ -5,8 +5,9 @@
 
 import Foundation
 import Security
+import PromiseKit
 import Security.SecAccessControl
-import Dispatch
+
 
 class KeychainAccessManager: KeychainAccessProtocol {
 
@@ -17,67 +18,51 @@ class KeychainAccessManager: KeychainAccessProtocol {
         self.secItemWrapper = secItemWrapper
     }
 
-    func checkCredentials(userName:String) {
+    func checkCredentials(userName:String) -> Promise<OSStatus> {
+        return Promise<OSStatus> {
+            fulfill, reject in
+            let query : [String:Any] = [
+                String(kSecClass) : kSecClassGenericPassword,
+                String(kSecAttrService) : serviceName,
+                String(kSecAttrAccount) : userName,
+                String(kSecReturnData) : true,
+                String(kSecUseOperationPrompt) : "Authenticate to login"
+            ]
 
-        let query : [String:Any] = [
-            String(kSecClass) : kSecClassGenericPassword,
-            String(kSecAttrService) : serviceName,
-            String(kSecAttrAccount) : userName,
-            String(kSecReturnData) : true,
-            String(kSecUseOperationPrompt) : "Authenticate to login"
-        ]
-
-        DispatchQueue.global(qos: .userInitiated).async{
-            var result : CFTypeRef?
-            let status = self.secItemWrapper.itemCopyMatching(query as CFDictionary, &result)
-
-            switch status {
-                case errSecSuccess:
-                    print("success matching item from keychain")
-                    break
-                case errSecItemNotFound:
-                    print("item not found in the keychain")
-                    break
-                default:
-                    print("app couldn't find password")
-                    break
+            DispatchQueue.global(qos: .userInitiated).async{
+                var result : CFTypeRef?
+                let status = self.secItemWrapper.itemCopyMatching(query as CFDictionary, &result)
+                fulfill(status)
             }
         }
     }
 
 
-    func storeCredentials(userName: String, password: String) {
-        var error: Unmanaged<CFError>?
+    func storeCredentials(userName: String, password: String) -> OSStatus {
+//        return Promise<OSStatus> {
+//            fulfill, reject in
 
-        let sacObject = SecAccessControlCreateWithFlags(
-                kCFAllocatorDefault,
-                kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
-                SecAccessControlCreateFlags.userPresence,
-                &error)
+            var error: Unmanaged<CFError>?
 
-        let passwordData = password.data(using: .utf8)
+            let sacObject = SecAccessControlCreateWithFlags(
+                    kCFAllocatorDefault,
+                    kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+                    SecAccessControlCreateFlags.userPresence,
+                    &error)
 
-        let attributes : [String: Any] = [
-            String(kSecClass) : kSecClassGenericPassword,
-            String(kSecAttrService) : serviceName,
-            String(kSecAttrAccount) : userName,
-            String(kSecValueData) : passwordData as Any,
-            String(kSecAttrAccessControl) : sacObject as Any
+            let passwordData = password.data(using: .utf8)
 
-        ]
-        let status = secItemWrapper.addItem(attributes as CFDictionary, nil)
+            let attributes : [String: Any] = [
+                String(kSecClass) : kSecClassGenericPassword,
+                String(kSecAttrService) : serviceName,
+                String(kSecAttrAccount) : userName,
+                String(kSecValueData) : passwordData as Any,
+                String(kSecAttrAccessControl) : sacObject as Any
 
-        switch status {
-            case errSecSuccess:
-                print("success saving password")
-                break
-            case errSecDuplicateItem:
-                print("duplicated item in the keychain")
-                break
-            default:
-                print("app couldn't save password")
-                break
-        }
+            ]
+            return secItemWrapper.addItem(attributes as CFDictionary, nil)
+//        }
+
     }
 
     func updateCredentials(userName:String, password:String) {

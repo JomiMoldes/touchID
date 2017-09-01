@@ -35,10 +35,46 @@ class ViewController: UIViewController, UIAlertViewDelegate {
 
         let secItemWrapper = SecItemWrapper()
         let keychainMgr = KeychainAccessManager(secItemWrapper: secItemWrapper)
-//      keychainMgr.storeCredentials(userName: "Miguel2", password: "Miguel22")
+//        storeCredentials(keychainMgr)
+        checkCredentials(keychainMgr)
 //        keychainMgr.updateCredentials(userName: "Miguel2", password: "Miguel23")
 //      keychainMgr.checkCredentials(userName:"Miguel3")
 //        keychainMgr.deleteCredentials(userName: "Miguel2")
+    }
+
+    func storeCredentials(_ keychainMgr:KeychainAccessProtocol) {
+        let status = keychainMgr.storeCredentials(userName: "Miguel2", password: "Miguel22")
+        switch status {
+            case errSecSuccess:
+                print("success saving password")
+                break
+            case errSecDuplicateItem:
+                print("duplicated item in the keychain")
+                break
+            default:
+                print("app couldn't save password")
+                break
+        }
+    }
+
+    func checkCredentials(_ keychainMgr:KeychainAccessProtocol) {
+        keychainMgr.checkCredentials(userName: "Miguel2").then {
+          status -> Void in
+            switch status {
+            case errSecSuccess:
+                print("success matching item from keychain")
+                break
+            case errSecItemNotFound:
+                print("item not found in the keychain")
+                break
+            default:
+                print("app couldn't find password")
+                break
+            }
+      }.catch(policy:.allErrors) {
+          error in
+          print(error)
+      }
     }
 
     func pressed(_ sender:UIEvent) {

@@ -14,4 +14,16 @@ class SecItemWrapperFake : SecItemWrapper {
     override func addItem(_ attributes: CFDictionary, _ result: UnsafeMutablePointer<CFTypeRef?>?) -> OSStatus {
         return status
     }
+
+    override func itemCopyMatching(_ query: CFDictionary, _ result: UnsafeMutablePointer<CFTypeRef?>?) -> OSStatus {
+        return status
+    }
+
+    override func updateItem(_ query: CFDictionary, _ attributesToUpdate: CFDictionary) -> OSStatus {
+        return status
+    }
+
+    override func deleteItem(_ query: CFDictionary) -> OSStatus {
+        return status
+    }
 }

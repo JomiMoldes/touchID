@@ -36,10 +36,9 @@ class ViewController: UIViewController, UIAlertViewDelegate {
         let secItemWrapper = SecItemWrapper()
         let keychainMgr = KeychainAccessManager(secItemWrapper: secItemWrapper)
 //        storeCredentials(keychainMgr)
-        checkCredentials(keychainMgr)
-//        keychainMgr.updateCredentials(userName: "Miguel2", password: "Miguel23")
-//      keychainMgr.checkCredentials(userName:"Miguel3")
-//        keychainMgr.deleteCredentials(userName: "Miguel2")
+//        checkCredentials(keychainMgr)
+        updateCredentials(keychainMgr)
+//        deleteCredentials(keychainMgr)
     }
 
     func storeCredentials(_ keychainMgr:KeychainAccessProtocol) {
@@ -75,6 +74,42 @@ class ViewController: UIViewController, UIAlertViewDelegate {
           error in
           print(error)
       }
+    }
+
+    func updateCredentials(_ keychainMgr:KeychainAccessProtocol) {
+        keychainMgr.updateCredentials(userName: "Miguel23", password: "123").then {
+            status -> Void in
+            switch status {
+            case errSecSuccess:
+                print("success updating password")
+                break
+            case errSecItemNotFound:
+                print("item not found in the keychain for updating")
+                break
+            default:
+                print("app couldn't update password")
+                break
+            }
+        }.catch(policy: .allErrors) {
+            error in
+            print(error)
+        }
+    }
+
+    private func deleteCredentials(_ keychainMgr:KeychainAccessProtocol) {
+        let status = keychainMgr.deleteCredentials(userName: "Miguel2")
+
+        switch status {
+            case errSecSuccess:
+                print("success deleting user")
+                break
+            case errSecItemNotFound:
+                print("item not found in the keychain for deleting")
+                break
+            default:
+                print("app couldn't delete password")
+                break
+        }
     }
 
     func pressed(_ sender:UIEvent) {

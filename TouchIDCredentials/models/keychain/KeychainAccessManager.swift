@@ -39,68 +39,50 @@ class KeychainAccessManager: KeychainAccessProtocol {
 
 
     func storeCredentials(userName: String, password: String) -> OSStatus {
-//        return Promise<OSStatus> {
-//            fulfill, reject in
+        var error: Unmanaged<CFError>?
 
-            var error: Unmanaged<CFError>?
-
-            let sacObject = SecAccessControlCreateWithFlags(
-                    kCFAllocatorDefault,
-                    kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
-                    SecAccessControlCreateFlags.userPresence,
-                    &error)
-
-            let passwordData = password.data(using: .utf8)
-
-            let attributes : [String: Any] = [
-                String(kSecClass) : kSecClassGenericPassword,
-                String(kSecAttrService) : serviceName,
-                String(kSecAttrAccount) : userName,
-                String(kSecValueData) : passwordData as Any,
-                String(kSecAttrAccessControl) : sacObject as Any
-
-            ]
-            return secItemWrapper.addItem(attributes as CFDictionary, nil)
-//        }
-
-    }
-
-    func updateCredentials(userName:String, password:String) {
+        let sacObject = SecAccessControlCreateWithFlags(
+                kCFAllocatorDefault,
+                kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+                SecAccessControlCreateFlags.userPresence,
+                &error)
 
         let passwordData = password.data(using: .utf8)
 
-        let query : [String:Any] = [
-            String(kSecClass) : kSecClassGenericPassword,
-            String(kSecAttrService) : serviceName,
-            String(kSecAttrAccount) : userName,
+        let attributes: [String: Any] = [
+            String(kSecClass): kSecClassGenericPassword,
+            String(kSecAttrService): serviceName,
+            String(kSecAttrAccount): userName,
+            String(kSecValueData): passwordData as Any,
+            String(kSecAttrAccessControl): sacObject as Any
+
         ]
+        return secItemWrapper.addItem(attributes as CFDictionary, nil)
+    }
 
-        let attributes : [String: Any] = [
-            String(kSecValueData) : passwordData as Any
-        ]
-        
-        DispatchQueue.global(qos: .userInitiated).async {
+    func updateCredentials(userName:String, password:String) -> Promise<OSStatus> {
+        return Promise<OSStatus> {
+            fulfill, reject in
 
-            let status = self.secItemWrapper.updateItem(query as CFDictionary, attributes as CFDictionary)
+            let passwordData = password.data(using: .utf8)
 
-            switch status {
-            case errSecSuccess:
-                print("success updating password")
-                break
-            case errSecDuplicateItem:
-                print("duplicated item in the keychain, but I want to update it!")
-                break
-            case errSecItemNotFound:
-                print("item not found in the keychain for updating")
-                break
-            default:
-                print("app couldn't update password")
-                break
+            let query: [String: Any] = [
+                String(kSecClass): kSecClassGenericPassword,
+                String(kSecAttrService): serviceName,
+                String(kSecAttrAccount): userName,
+            ]
+
+            let attributes: [String: Any] = [
+                String(kSecValueData): passwordData as Any
+            ]
+
+            DispatchQueue.global(qos: .userInitiated).async {
+                fulfill(self.secItemWrapper.updateItem(query as CFDictionary, attributes as CFDictionary))
             }
         }
     }
 
-    func deleteCredentials(userName:String) {
+    func deleteCredentials(userName:String) -> OSStatus {
 
         let query : [String:Any] = [
             String(kSecClass) : kSecClassGenericPassword,
@@ -108,23 +90,7 @@ class KeychainAccessManager: KeychainAccessProtocol {
             String(kSecAttrAccount) : userName,
         ]
 
-        let status = secItemWrapper.deleteItem(query as CFDictionary)
-
-        switch status {
-            case errSecSuccess:
-                print("success deleting user")
-                break
-            case errSecDuplicateItem:
-                print("duplicated item in the keychain, but I want to delete it!")
-                break
-            case errSecItemNotFound:
-                print("item not found in the keychain for deleting")
-                break
-            default:
-                print("app couldn't delete password")
-                break
-        }
-
+        return(secItemWrapper.deleteItem(query as CFDictionary))
     }
 
 }

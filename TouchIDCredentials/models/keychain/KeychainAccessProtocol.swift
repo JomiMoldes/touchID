@@ -12,8 +12,8 @@ protocol KeychainAccessProtocol {
 
     func checkCredentials(userName:String) -> Promise<OSStatus>
 
-    func updateCredentials(userName:String, password:String)// -> Promise<OSStatus>
+    func updateCredentials(userName:String, password:String) -> Promise<OSStatus>
 
-    func deleteCredentials(userName:String)
+    func deleteCredentials(userName:String) -> OSStatus
 
 }

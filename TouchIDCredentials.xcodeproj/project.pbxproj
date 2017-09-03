@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3A79543464C0A0A3DAE861FB /* Pods_TouchIDCredentialsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552B00141593AD61F9E49768 /* Pods_TouchIDCredentialsTests.framework */; };
-		45BAF11151852B7CCAFE8F13 /* KeychainAccessManagerFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BAF98A74784B17D8C2FA6F /* KeychainAccessManagerFake.swift */; };
 		45BAF250296FC722FF384698 /* TouchIDContextWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BAFF8A0E529A1FF60A29AF /* TouchIDContextWrapper.swift */; };
 		45BAF654C82649FCB6703DA4 /* SecItemWrapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BAF9B9718D7E7883AF9D47 /* SecItemWrapperProtocol.swift */; };
 		45BAF69C8D603B35F0865BE9 /* TouchIDProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BAF0B3E4CEEB77566D39C3 /* TouchIDProtocol.swift */; };
@@ -53,7 +52,6 @@
 		45BAF7A89C5445B8E3986201 /* SecItemWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecItemWrapper.swift; sourceTree = "<group>"; };
 		45BAF86FAE281BDFCFB1427F /* TouchIDContextWrapperFake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDContextWrapperFake.swift; sourceTree = "<group>"; };
 		45BAF884486C869C134353B2 /* TouchIDManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDManager.swift; sourceTree = "<group>"; };
-		45BAF98A74784B17D8C2FA6F /* KeychainAccessManagerFake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainAccessManagerFake.swift; sourceTree = "<group>"; };
 		45BAF9B9718D7E7883AF9D47 /* SecItemWrapperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecItemWrapperProtocol.swift; sourceTree = "<group>"; };
 		45BAFC26F754BF9CD6D3F843 /* TouchIDManagerFake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDManagerFake.swift; sourceTree = "<group>"; };
 		45BAFF8A0E529A1FF60A29AF /* TouchIDContextWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDContextWrapper.swift; sourceTree = "<group>"; };
@@ -110,7 +108,6 @@
 			children = (
 				45BAFF9E6EB5519A55D43B91 /* KeychainAccessManagerTest.swift */,
 				45BAF1A4C2D33C4B3360A2B6 /* SecItemWrapperFake.swift */,
-				45BAF98A74784B17D8C2FA6F /* KeychainAccessManagerFake.swift */,
 			);
 			path = keychain;
 			sourceTree = "<group>";
@@ -444,7 +441,6 @@
 				45BAFD88690E3AA1D44A065D /* TouchIDContextWrapperFake.swift in Sources */,
 				45BAFDA0E850792767B2316C /* KeychainAccessManagerTest.swift in Sources */,
 				45BAF9639B0991D99B2F75B8 /* SecItemWrapperFake.swift in Sources */,
-				45BAF11151852B7CCAFE8F13 /* KeychainAccessManagerFake.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

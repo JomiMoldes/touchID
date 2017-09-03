@@ -8,8 +8,10 @@ import LocalAuthentication
 
 protocol TouchIDContextProtocol {
 
+    var context:LAContext { get set }
+
     func canEvaluatePolicy(_ policy: LAPolicy, error: NSErrorPointer) -> Bool
 
-//    func evaluatePolicy(_ policy: LAPolicy, localizedReason: String, reply: @escaping (Bool, Error?) -> Swift.Void)
+    func evaluatePolicy(_ policy: LAPolicy, localizedReason: String, reply: @escaping (Bool, Error?) -> Swift.Void)
 
 }

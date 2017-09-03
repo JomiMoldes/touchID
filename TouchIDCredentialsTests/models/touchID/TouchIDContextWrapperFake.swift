@@ -10,14 +10,24 @@ import LocalAuthentication
 
 class TouchIDContextWrapperFake: TouchIDContextProtocol {
 
-    var canEvaluate = false
+    var context = LAContext()
+
+    var canEvaluate = true
+    var correctFinger = true
 
     func canEvaluatePolicy(_ policy: LocalAuthentication.LAPolicy, error: NSErrorPointer) -> Bool {
+        if error != nil {
+            error?.pointee = NSError(domain: "", code: 1)
+        }
         return canEvaluate
     }
 
-//    func evaluatePolicy(_ policy: LocalAuthentication.LAPolicy, localizedReason: String, reply: @escaping (Bool, Error?) -> Void) {
-////        context.evaluatePolicy(policy, localizedReason: localizedReason, reply: reply)
-//    }
+    func evaluatePolicy(_ policy: LocalAuthentication.LAPolicy, localizedReason: String, reply: @escaping (Bool, Error?) -> Void) {
+        if correctFinger {
+            reply(true, nil)
+            return
+        }
+        reply(false, NSError(domain: "", code: 1))
+    }
 
 }

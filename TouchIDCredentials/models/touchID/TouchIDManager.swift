@@ -5,62 +5,51 @@
 
 import Foundation
 import LocalAuthentication
+import PromiseKit
 
 class TouchIDManager: TouchIDProtocol {
 
-    var context : TouchIDContextProtocol = TouchIDContextWrapper()
+    var contextWrapper: TouchIDContextProtocol = TouchIDContextWrapper()
 
-    func checkID(completion:@escaping (Bool) -> Void) {
-        let myLocalizedReasonString = "Use your finger please"
+    func checkID() -> Promise<Bool> {
+        return Promise<Bool> {
+            fulfill, reject in
 
-        var authError: NSError? = nil
-        if shouldShowTouchIDButton() {
-            if canEvaluatePolicy(authError: &authError) {
-                (context as! TouchIDContextWrapper).context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: myLocalizedReasonString) { (success, evaluateError) in
-                    if (success) {
-//                        print("correct finger")
-//                        // User authenticated successfully, take appropriate action
-                        completion(true)
-                    } else {
-                        if let error = evaluateError {
-                            switch (error as NSError).code {
-                            case LAError.userCancel.rawValue:
-                                print("user cancel")
-                                break
-                            case LAError.systemCancel.rawValue:
-                                print("system cancel")
-                                break
-                            case LAError.userFallback.rawValue:
-                                print("user fallback")
-                                break
-                            default:
-                            break
-                            }
-                            completion(false)
+            shouldShowTouchIDButton().then {
+                success -> Void in
+                if success {
+                    var authError: NSError? = nil
+                    self.evaluatePolicy(authError: &authError) {
+                        (success, evaluateError) in
+                        if success {
+                            fulfill(true)
+                            return
                         }
-
+                        reject(evaluateError!)
                     }
+                    return
                 }
-            } else {
-//                // Could not evaluate policy; look at authError and present an appropriate message to user
-                completion(false)
+                fulfill(false)
+            }.catch(policy: .allErrors) {
+                error in
+                reject(error)
             }
-        } else {
-            // Fallback on earlier versions
-            completion(false)
         }
-        
     }
 
-    func shouldShowTouchIDButton() -> Bool {
-        if !minimumVersion() {
-            return false
+    func shouldShowTouchIDButton() -> Promise<Bool> {
+        return Promise<Bool> {
+            fulfill, reject in
+            guard minimumVersion() else {
+                return fulfill(false)
+            }
+            var authError: NSError? = nil
+            if canEvaluatePolicy(authError: &authError) {
+                fulfill(true)
+                return
+            }
+            reject(authError!)
         }
-        return true
-    }
-
-    func canEvaluatePolicy(authError:NSErrorPointer) -> Bool {
-        return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: authError)
     }
 
     func minimumVersion() -> Bool {
@@ -68,6 +57,18 @@ class TouchIDManager: TouchIDProtocol {
             return true
         }
         return false
+    }
+
+    //MARK Private
+
+    private func canEvaluatePolicy(authError:NSErrorPointer) -> Bool {
+        return contextWrapper.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: authError)
+//        return context.canEvaluatePolicy(.deviceOwnerAuthentication, error: authError)
+    }
+
+    private func evaluatePolicy(authError:NSErrorPointer, reply: @escaping (Bool, Error?) -> Swift.Void) {
+        let myLocalizedReasonString = "Use your finger please"
+        return contextWrapper.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: myLocalizedReasonString, reply: reply)
     }
 
 }

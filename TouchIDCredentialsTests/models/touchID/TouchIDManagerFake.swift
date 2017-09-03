@@ -5,6 +5,7 @@
 
 import Foundation
 import XCTest
+import PromiseKit
 import LocalAuthentication
 
 @testable import TouchIDCredentials
@@ -13,16 +14,26 @@ class TouchIDManagerFake: TouchIDManager {
 
     var success : Bool = false
     var supportsMinVersion : Bool = true
+    var canEvaluate : Bool = true
+    var evaluatesSuccessfully : Bool = true
 
-    override func checkID(completion:@escaping (Bool) -> Void) {
-        if shouldShowTouchIDButton() {
-            if canEvaluatePolicy(authError: nil) {
-                completion(true)
+    /*override func checkID() -> Promise<Bool> {
+        return Promise<Bool>{
+            fulfill, reject in
+            if success {
+                fulfill(true)
                 return
             }
+            fulfill(false)
         }
-        completion(false)
-    }
+    }*/
+
+    /*override func checkID() -> Promise<Bool> {
+        return Promise<Bool> {
+            fulfill, reject in
+
+        }
+    }*/
 
     override func minimumVersion() -> Bool {
         return supportsMinVersion

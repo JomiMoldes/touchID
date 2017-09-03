@@ -14,7 +14,7 @@ class TouchIDContextWrapper: TouchIDContextProtocol {
         return context.canEvaluatePolicy(policy, error: error)
     }
 
-//    func evaluatePolicy(_ policy: LocalAuthentication.LAPolicy, localizedReason: String, reply: @escaping (Bool, Error?) -> Void) {
-//        context.evaluatePolicy(policy, localizedReason: localizedReason, reply: reply)
-//    }
+    func evaluatePolicy(_ policy: LocalAuthentication.LAPolicy, localizedReason: String, reply: @escaping (Bool, Error?) -> Void) {
+        context.evaluatePolicy(policy, localizedReason: localizedReason, reply: reply)
+    }
 }

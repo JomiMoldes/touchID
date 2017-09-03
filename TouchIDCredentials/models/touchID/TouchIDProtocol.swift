@@ -4,13 +4,14 @@
 //
 
 import Foundation
+import PromiseKit
 
 protocol TouchIDProtocol {
 
-    var context : TouchIDContextProtocol { get set }
+    var contextWrapper: TouchIDContextProtocol { get set }
 
-    func checkID(completion:@escaping (Bool) -> Void)
+    func checkID() -> Promise<Bool>
 
-    func shouldShowTouchIDButton() -> Bool
+    func shouldShowTouchIDButton() -> Promise<Bool>
 
 }
